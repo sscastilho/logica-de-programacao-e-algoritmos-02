@@ -1,47 +1,85 @@
-Algoritmo "2C-Funcao e Procedimento"
+Algoritmo "2D-Funcao e Procedimento"
 // Autor(a)    : Sullivan Santos Castilho
 // Data atual  : 11/01/2023
 
 Var
-lado1, lado2, lado3: inteiro
+opcaoMenu: caractere
+clientes: vetor[1..5] de caractere
 
-procedimento lerDados()
+procedimento mostrarMenu()
 inicio
-            Escreval("Lado 1: ")
-      leia(lado1)
-            Escreval("Lado 2: ")
-      leia(lado2)
-            Escreval("Lado 3: ")
-      leia(lado3)
+      Escreval("1- Cadastrar")
+      Escreval("2- Pesquisar")
+      Escreval("3- Excluir")
+      leia(opcaoMenu)
 fimprocedimento
 
-funcao  verificarIntegridadeTriangulo(): logico
-inicio
-      se(lado1 > lado2 + lado3) ou (lado2 > lado1 + lado3) ou (lado3 > lado1 + lado2) entao
-      retorne falso
-      senao
-      retorne verdadeiro
-      fimse
-fimfuncao
-
-funcao verificarTipoTriangulo(): caractere
-inicio
-      se (lado1 = lado2) E (lado2 = lado3) entao
-      retorne "Equilatero"
-      senao
-      se (lado1 = lado2) ou (lado2 = lado3) ou (lado1 = lado3) entao
-      retorne "Isoceles"
-      senao
-      retorne "Escaleno"
-      fimse
-      fimse
-fimfuncao
+procedimento cadastrar()
+var
+   i: inteiro
 
 inicio
-    lerDados()
-    se verificarIntegridadeTriangulo() entao
-    escreval(verificarTipoTriangulo())
-    senao
-    escreval("N?o ? triangulo")
-    fimse
+      para i de 1 ate 5 faca
+           se clientes[i] = "" entao
+              Escreval("Informe o nome do cliente")
+              leia(clientes[i])
+           fimse
+      fimpara
+fimprocedimento
+
+procedimento pesquisar()
+var
+   i: inteiro
+   nomeAPesquisar: caractere
+   indiceSucesso: inteiro
+
+inicio
+
+      Escreval("Informe o nome do cliente a pesquisar")
+      leia(nomeAPesquisar)
+      indiceSucesso <- -1
+      para i de 1 ate 5 faca
+           se clientes[i] = nomeAPesquisar entao
+              indiceSucesso <- i
+              interrompa
+           fimse
+      fimpara
+      se indiceSucesso = -1 entao
+         Escreval ("Cliente nao encontrado")
+      senao
+           Escreval("Cliente encontrado na posicao ", indiceSucesso)
+      fimse
+fimprocedimento
+
+procedimento Excluir()
+var
+   indiceExclusao: inteiro
+
+inicio
+
+      Escreval("Informe o indice a excluir")
+      leia(indiceExclusao)
+      se (indiceExclusao > 5) ou (indiceExclusao < 1 ) entao
+      escreval ("Indice invalido")
+      senao
+           clientes[indiceExclusao] <- ""
+           fimse
+fimprocedimento
+
+
+inicio
+      repita
+            mostrarMenu()
+            escolha opcaoMenu
+                    caso "1"
+                         cadastrar()
+                    caso "2"
+                         pesquisar()
+                    caso "3"
+                         excluir()
+                    outrocaso
+                             Escreval("opcao invalida")
+                    fimescolha
+                    ate opcaoMenu = "4"
+
 fimalgoritmo
