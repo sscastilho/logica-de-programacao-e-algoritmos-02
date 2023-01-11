@@ -3,83 +3,45 @@ Algoritmo "2C-Funcao e Procedimento"
 // Data atual  : 11/01/2023
 
 Var
-opcaoMenu: caractere
-clientes: vetor[1..5] de caractere
+lado1, lado2, lado3: inteiro
 
-procedimento mostrarMenu()
+procedimento lerDados()
 inicio
-      Escreval("1- Cadastrar")
-      Escreval("2- Pesquisar")
-      Escreval("3- Excluir")
-      leia(opcaoMenu)
+            Escreval("Lado 1: ")
+      leia(lado1)
+            Escreval("Lado 2: ")
+      leia(lado2)
+            Escreval("Lado 3: ")
+      leia(lado3)
 fimprocedimento
 
-procedimento cadastrar()
-var
-   i: inteiro
-   
+funcao  verificarIntegridadeTriangulo(): logico
 inicio
-      para i de 1 ate 5 faca
-           se clientes[i] = "" entao
-              Escreval("Informe o nome do cliente")
-              leia(clientes[i])
-           fimse
-      fimpara
-fimprocedimento
-
-procedimento pesquisar()
-var
-   i: inteiro
-   nomeAPesquisar: caractere
-   indiceSucesso: inteiro
-
-inicio
-
-      Escreval("Informe o nome do cliente a pesquisar")
-      leia(nomeAPesquisar)
-      indiceSucesso <- -1
-      para i de 1 ate 5 faca
-           se clientes[i] = nomeAPesquisar entao
-              indiceSucesso <- i
-              interrompa
-           fimse
-      fimpara
-      se indiceSucesso = -1 entao
-         Escreval ("Cliente não encontrado")
+      se(lado1 > lado2 + lado3) ou (lado2 > lado1 + lado3) ou (lado3 > lado1 + lado2) entao
+      retorne falso
       senao
-           Escreval("Cliente encontrado na posicao ", indiceSucesso)
+      retorne verdadeiro
       fimse
-fimprocedimento
+fimfuncao
 
-procedimento Excluir()
-var
-   indiceExclusao: inteiro
-
+funcao verificarTipoTriangulo(): caractere
 inicio
-
-      Escreval("Informe o indice a excluir")
-      leia(indiceExclusao)
-      se (indiceExclusao > 5) ou (indiceExclusao < 1 ) entao
-      escreval ("Indice invalido")
+      se (lado1 = lado2) E (lado2 = lado3) entao
+      retorne "Equilatero"
       senao
-           clientes[indiceExclusao] <- ""
-           fimse
-fimprocedimento
-
+      se (lado1 = lado2) ou (lado2 = lado3) ou (lado1 = lado3) entao
+      retorne "Isoceles"
+      senao
+      retorne "Escaleno"
+      fimse
+      fimse
+fimfuncao
 
 inicio
-      repita
-            mostrarMenu()
-            escolha opcaoMenu
-                    caso "1"
-                         cadastrar()
-                    caso "2"
-                         pesquisar()
-                    caso "3"
-                         excluir()
-                    outrocaso
-                             Escreval("opcao invalida")
-                    fimescolha
-                    ate opcaoMenu = "4"
-
+    lerDados()
+    se verificarIntegridadeTriangulo() entao
+    escreval(verificarTipoTriangulo())
+    senao
+    escreval("Nao e triangulo")
+    fimse
 fimalgoritmo
